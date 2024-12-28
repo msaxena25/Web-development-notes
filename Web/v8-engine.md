@@ -142,3 +142,31 @@ multiply(5, 7);
 - Its ability to compile WebAssembly ensures compatibility with modern web applications.
 
 V8's design ensures high performance, making it the backbone of Chrome, Node.js, and many other platforms.
+
+# Why Heap data structure is used by v8 engine ?
+
+
+The V8 engine, like many other programming languages and runtimes, utilizes a heap data structure for several key reasons:
+
+**1. Dynamic Memory Allocation:**
+
+* **Flexibility:** JavaScript is a dynamically typed language, meaning variable types can change during runtime. The heap provides a flexible pool of memory where objects and data structures of varying sizes can be allocated and deallocated as needed.
+* **Object Allocation:** Objects in JavaScript, such as arrays, functions, and custom objects, are typically stored on the heap. This allows for efficient management of complex data structures and their properties.
+
+**2. Garbage Collection:**
+
+* **Automatic Memory Management:** The heap is essential for garbage collection, a process that automatically reclaims memory occupied by objects that are no longer referenced by the program. This prevents memory leaks and ensures efficient memory utilization.
+* **Efficient Reclamation:** Garbage collection algorithms, such as mark-and-sweep or generational collection, work effectively on heap-allocated memory.
+
+**3. Sharing Data Between Functions:**
+
+* **Global Scope:** Variables declared in the global scope are typically stored on the heap, making them accessible from any part of the program.
+* **Function Closures:** Closures, which are functions that "remember" variables from their enclosing scope, rely on the heap to store these variables even after the enclosing function has returned.
+
+**4. Complex Data Structures:**
+
+* **Linked Lists, Trees, Graphs:** These data structures often involve dynamically allocated nodes that are interconnected. The heap provides the necessary flexibility to create and manage these complex structures.
+
+**In summary:**
+
+The heap is a fundamental component of the V8 engine, enabling dynamic memory allocation, efficient garbage collection, sharing data between functions, and supporting complex data structures. It plays a crucial role in the performance and memory management of JavaScript applications.
