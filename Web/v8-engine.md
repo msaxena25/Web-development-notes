@@ -2,7 +2,7 @@ The **V8 engine** is Google’s high-performance JavaScript and WebAssembly engi
 
 ---
 
-### **1. Key Components of the V8 Engine**
+## **1. Key Components of the V8 Engine**
 1. **Parser**  
    - Converts JavaScript code into an **Abstract Syntax Tree (AST)**.
    - The AST represents the hierarchical structure of the code, making it easier to analyze and manipulate.
@@ -25,7 +25,7 @@ The **V8 engine** is Google’s high-performance JavaScript and WebAssembly engi
 
 ---
 
-### **2. Execution Workflow in V8**
+## **2. Execution Workflow in V8**
 
 #### **Step 1: Parsing**
 - JavaScript code is parsed into an **Abstract Syntax Tree (AST)**.
@@ -65,7 +65,7 @@ The **V8 engine** is Google’s high-performance JavaScript and WebAssembly engi
 
 ---
 
-### **3. Memory Management**
+## **3. Memory Management**
 Memory in V8 is divided into two main areas:
 1. **Stack Memory:**
    - Used for storing primitive values and function calls.
@@ -86,32 +86,13 @@ Memory in V8 is divided into two main areas:
 
 ---
 
-### **4. Key Optimization Techniques**
-1. **Hidden Classes:**
-   - V8 uses hidden classes to optimize property access in objects.
-   - Objects with the same structure share the same hidden class, reducing lookup time.
-
-2. **Inline Caching:**
-   - Optimizes repeated property lookups by caching the result of a previous lookup.
-
-3. **Code Inlining:**
-   - Replaces function calls with their actual code to reduce overhead.
-
-4. **Type Feedback:**
-   - Gathers runtime information about data types to generate optimized machine code.
-
-5. **Lazy Parsing:**
-   - Only fully parses and compiles functions when they are called, improving startup performance.
-
----
-
 ### **5. WebAssembly Support**
 - V8 supports **WebAssembly (Wasm)**, a binary instruction format for efficient execution.
 - WebAssembly code skips the interpretation phase and is directly compiled to machine code, resulting in faster performance.
 
 ---
 
-### **6. Real-World Example**
+## **6. Real-World Example**
 For a function like:
 ```javascript
 function multiply(x, y) {

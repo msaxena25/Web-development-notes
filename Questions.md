@@ -12,6 +12,7 @@ These questions aim to assess your architectural thinking, design patterns, and 
 
 **3. Describe your experience with implementing security best practices in web applications. How do you prevent common vulnerabilities like XSS, CSRF, and SQL injection?**
 
+* **Answer** in a Separate security file. Web\security.md
 * **Focus:** Assesses your understanding of security principles, common vulnerabilities, and mitigation techniques (input validation, authentication/authorization, encryption, security headers).
 
 **4. How would you design a real-time, low-latency communication system for a web application? What technologies would you use?**
@@ -20,6 +21,7 @@ These questions aim to assess your architectural thinking, design patterns, and 
 
 **5. Explain your understanding of API design principles (REST, GraphQL) and how you would design a robust and maintainable API for a complex application.**
 
+* **Answer** in a Separate restful-apis file. Web\restful-apis.md
 * **Focus:** Evaluates your knowledge of API design principles, RESTful constraints, GraphQL schema design, versioning strategies, and API documentation.
 
 **6. Describe your experience with containerization technologies (Docker, Kubernetes) and how they can be used to improve the deployment and management of web applications.**
@@ -28,6 +30,7 @@ These questions aim to assess your architectural thinking, design patterns, and 
 
 **7. How do you approach performance optimization in web applications? What tools and techniques do you use to identify and address performance bottlenecks?**
 
+* **Answer** in a Separate file. Web\performance-optimization-in-web-applications.md
 * **Focus:** Evaluates your knowledge of performance profiling tools, techniques like caching, code optimization, and database tuning, and your ability to identify and resolve performance issues.
 
 **8. Explain your understanding of different caching strategies (browser caching, CDN caching, server-side caching) and how you would implement them in a web application.**
@@ -35,7 +38,7 @@ These questions aim to assess your architectural thinking, design patterns, and 
 * **Focus:** Assesses your knowledge of caching mechanisms, their benefits (reduced latency, improved performance), and how to effectively leverage caching to optimize web application delivery.
 
 **9. How do you approach testing and quality assurance in web development projects? What testing methodologies and tools do you use?**
-
+* **Answer** in a Separate file. Web\testing.md
 * **Focus:** Evaluates your understanding of testing methodologies (unit tests, integration tests, end-to-end tests), test automation frameworks, and the importance of thorough testing in the development lifecycle.
 
 **10. Describe your experience with cloud computing platforms (AWS, Azure, GCP) and how you would leverage their services (e.g., compute, storage, databases) to build and deploy a scalable and cost-effective web application.**
@@ -93,7 +96,7 @@ By carefully evaluating these factors, organizations can make an informed decisi
 
 --------
 
-# Designing a highly scalable and available web application
+# **Designing a highly scalable and available web application**
 
 **Scalability Strategies:**
 
