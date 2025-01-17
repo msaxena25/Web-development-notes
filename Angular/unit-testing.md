@@ -434,26 +434,6 @@ it('should use the custom spy', () => {
   expect(customSpy('input')).toBe('processed input');
 });
 ```
-
----
-
-### **Summary of Mocking Methods**
-| **Approach**                   | **Use Case**                                                    |
-|---------------------------------|----------------------------------------------------------------|
-| `spyOn`                        | Mock methods on existing objects or modules.                  |
-| `jasmine.createSpy`            | Create standalone spy functions.                              |
-| `jasmine.createSpyObj`         | Create an object with multiple mocked methods.                |
-| `and.returnValue`              | Set a specific return value for a mock.                      |
-| `and.callFake`                 | Define custom behavior for a mock.                           |
-| `and.callThrough`              | Call the original method but track calls.                    |
-| Mocking global functions        | Mock browser APIs like `setTimeout`, `console.log`.          |
-| Mocking class methods           | Mock methods on class prototypes.                           |
-| Mocking object properties       | Mock getters and setters using `Object.defineProperty`.      |
-| Mocking imported modules        | Mock ES module functions or objects.                        |
-| Using mock classes              | Create fake implementations for entire classes.             |
-| Using custom spies              | Create spies with custom logic.                              |
-
-By combining these approaches, you can effectively mock almost any JavaScript method or call for your tests.
 --------------
 
 # Mock HTML and access HTML elements
