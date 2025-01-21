@@ -125,7 +125,7 @@ The **JavaScript engine** is responsible for performing garbage collection. Each
 
 ---
 
-### **Key JavaScript Engines**
+### **JavaScript Engines**
 
 1. **V8 (Google)**
    - Used by Google Chrome and Node.js.

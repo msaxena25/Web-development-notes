@@ -118,6 +118,50 @@ Imagine a restaurant:
 
 ---
 
+## **How angular code loads after SSR page render**
+
+In an Angular Universal application with Server-Side Rendering (SSR), the application is initially rendered on the server and then sent as static HTML to the client. Once the client receives the static HTML, **Angular's client-side application** (the normal Angular SPA) takes over, making the page dynamic. This process is known as **hydration**.
+
+### **When Angular App Loads:**
+The client-side Angular application (after SSR) "loads" in the following stages:
+
+1. **Server-Side Rendering (SSR):** 
+   - When a user makes a request to your Angular Universal app, the server (Node.js with Angular Universal) processes the request and returns a fully rendered HTML page. This is the static content that includes the components' markup, titles, images, and text.
+   - **No JavaScript is involved at this stage**. The HTML is directly sent to the browser to be displayed.
+
+2. **Client-Side Bootstrap (Hydration):**
+   - Once the static HTML is loaded in the browser, **Angular takes over** and boots up on the client side. This process is called **hydration**.
+   - The **JavaScript bundle** (compiled Angular app) is downloaded and initialized. Angular takes control of the static HTML, replacing it with dynamic content and attaching the necessary event listeners.
+   - The browser downloads and initializes Angular’s client-side application, setting up routing, data binding, and event handling.
+
+### **At What Moment Does the Application "Load" in Code Terms?**
+The actual client-side Angular application loads at the following points in the lifecycle:
+
+1. **Browser Receives Static HTML (from SSR):** 
+   - Initially, the browser will receive a fully rendered static HTML page (this is the SSR output).
+   - **No Angular functionality** at this point, just plain HTML.
+
+2. **Angular’s Client-Side Application Bootstraps:**
+   - **When the JavaScript bundle (Angular's client-side app) is downloaded**, Angular starts bootstrapping, meaning it:
+     - Initializes the **Angular modules**, runs the **AppModule**, and activates the **root component** (`AppComponent`).
+     - **Hydrates the application**, taking over the static content and attaching the necessary Angular functionality.
+
+3. **Angular Application Becomes Fully Interactive (SPA behavior):**
+   - After Angular initializes, the page will behave like a **Single Page Application (SPA)**.
+   - **Routing, dynamic content rendering, and component updates** will happen without the need for full page reloads, as in a typical SPA.
+
+### **Do You Need to Do Anything at Code Level?**
+Generally, **you don't need to do anything special** to load the client-side Angular application once SSR is set up. However, you can ensure proper client-side initialization by:
+
+1. **Ensure Hydration Completeness:** Angular Universal is responsible for rendering the static HTML, but you should ensure that your app is **properly bootstrapped** by Angular on the client side:
+   - The **`platformBrowserDynamic().bootstrapModule(AppModule)`** in your `main.ts` file ensures that Angular initializes when the client loads the application.
+
+2. **Use Angular's Universal `TransferState`:**
+   - If your app needs to pre-load specific data on the server-side (e.g., API calls), you can use Angular’s `TransferState` API to transfer data between the server and client. This will allow your app to reuse the data from SSR, improving performance and preventing duplicate data fetching.
+   - Example: Transfer state can be used to share API responses between SSR and the client.
+
+---
+
 ## Implement Server-Side Rendering (SSR) for a simple HTML and JavaScript application
 
 Yes, we can implement Server-Side Rendering (SSR) for a simple HTML and JavaScript application with forms like login, user, and registration. While frameworks like Angular or React simplify the SSR process, you can achieve SSR for a basic application by using **Node.js** with an Express server.
