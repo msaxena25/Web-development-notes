@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+<body>
+  <div class="box"></div>
+
+</body>
+<style>
+
+  /* Center the box within the viewport */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the viewport */
+  margin: 0;
+  background-color: #f0f0f0; /* Light background color for contrast */
+}
+
+/* The animated square box */
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: gray; /* Initial background color */
+  animation: scaleAndColorChange 4s infinite alternate ease-in-out; /* Apply animation */
+}
+
+/* Keyframes for scaling the box and changing its background color */
+@keyframes scaleAndColorChange {
+  0% {
+    transform: scale(1); /* Original size */
+    background-color: gray; /* Original color */
+  }
+  14.28% {
+    transform: scale(1.2); /* Slightly larger */
+    background-color: red; /* First color */
+  }
+  28.56% {
+    transform: scale(1.4); /* Larger */
+    background-color: orange; /* Second color */
+  }
+  42.84% {
+    transform: scale(1.6); /* Even larger */
+    background-color: yellow; /* Third color */
+  }
+  57.12% {
+    transform: scale(1.7); /* Slightly smaller */
+    background-color: green; /* Fourth color */
+  }
+  71.4% {
+    transform: scale(1.8); /* Smaller */
+    background-color: blue; /* Fifth color */
+  }
+  85.68% {
+    transform: scale(1.9); /* Back to original size */
+    background-color: purple; /* Sixth color */
+  }
+  100% {
+    transform: scale(2); /* Original size */
+    background-color: pink; /* Seventh color */
+  }
+}
+
+</style>
+
+</html>
