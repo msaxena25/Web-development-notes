@@ -202,4 +202,10 @@ In trading, **charts** are essential for analyzing price movements and making in
 ---------------
 
 
+Bollinger Band - https://www.youtube.com/watch?v=9TCLTz3GG3g&t=427s
+Fake Breakout & Breakdown (stoploss hunting)- https://www.youtube.com/watch?v=Ze4GCTZJVWE
+Reversal Chart Patterns - Double top and Double bottom, Triple top and triple bottom, Head and shoulder, Rising wedge, Falling wedge - https://www.youtube.com/watch?v=RJvlvwj_ymM
 
+
+Global market index (See globally market trends) - https://www.moneycontrol.com/markets/global-indices/
+PCR (Put Call ratio) - 

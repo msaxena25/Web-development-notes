@@ -1369,25 +1369,99 @@ describe('HomeComponent', () => {
 
 ---
 
-# **Best Practices for Writing Unit Tests**
+## Test case - A Function calling another function multiple times with diff arguments
 
-1. **Follow the AAA Pattern**: Structure tests into Arrange, Act, and Assert phases for clarity.  
-2. **Write Independent Tests**: Ensure tests don't rely on the state or outcome of other tests.  
-3. **Test One Thing at a Time**: Focus each test case on a single functionality or behavior.  
-4. **Use Mocks and Spies**: Replace real dependencies with mocks or spies for isolation.  
-5. **Cover Edge Cases**: Test for all scenarios, including valid, invalid, and boundary conditions.  
-6. **Avoid Testing Implementation Details**: Test functionality and outputs, not internal code.  
-7. **Use Meaningful Test Names**: Name test cases descriptively to reflect their purpose.  
-8. **Mock External Dependencies**: Simulate external systems like APIs and databases.  
-9. **Keep Tests Small and Focused**: Write concise tests targeting specific functionality.  
-10. **Use Test Setup Hooks**: Leverage `beforeEach` and `afterEach` for shared setup/cleanup.  
-11. **Maintain High Coverage, but Don’t Obsess**: Prioritize meaningful tests over arbitrary coverage.  
-12. **Use Assertions Effectively**: Ensure assertions directly validate the test’s purpose.  
-13. **Avoid Overuse of `NO_ERRORS_SCHEMA`**: Define proper schemas instead of bypassing validation.  
-14. **Write Tests for Bugs**: Add tests for bugs before fixing them to prevent regressions.  
-15. **Regularly Refactor Tests**: Improve test maintainability by eliminating redundant logic.  
-16. **Leverage Angular Testing Utilities**: Use tools like `TestBed` and `fixture.detectChanges`.  
-17. **Clean Up After Tests**: Ensure no side effects or subscriptions remain post-tests.  
-18. **Integrate Tests with CI/CD**: Automate test execution in your CI/CD pipeline.  
-19. **Avoid Hardcoding Values**: Use constants or setup variables for reusable data.  
-20. **Document Complex Tests**: Add comments to explain intricate setups or scenarios.  
+```typescript
+// user.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class UserService {
+  private arr = [{ name: 'mohit', id: 111 }, { name: 'rahul', id: 222 }];
+
+  getUser(id: number) {
+    return this.arr.find(item => item.id === id);
+  }
+
+  calculate() {
+    const a = this.getUser(111);
+    const b = this.getUser(222);
+    return a?.name + b?.name;
+  }
+}
+```
+
+---
+
+To **mock `getUser()`** in the test case, you can use **`spyOn()`** to override its implementation. This is especially useful if you want to **simulate various scenarios** without modifying the original function.
+
+---
+
+### ✅ **Mocking `getUser()` Using `spyOn()`**
+
+```typescript
+// user.service.spec.ts
+
+  it('should return concatenated names from calculate()', () => {
+    // **`callFake()`** is used to provide a custom implementation for testing.
+    spyOn(service, 'getUser').and.callFake((id: number) => {
+      if (id === 111) return { name: 'mohit', id: 111 };
+      if (id === 222) return { name: 'rahul', id: 222 };
+      return undefined;
+    });
+
+    const result = service.calculate();
+    expect(result).toBe('mohitrahul');
+  });
+
+  it('should return undefined if getUser returns undefined', () => {
+    // Mocking getUser to always return undefined
+    spyOn(service, 'getUser').and.returnValue(undefined);
+
+    const result = service.calculate();
+    expect(result).toBe('undefinedundefined'); // Both a and b are undefined
+  });
+});
+```
+---
+
+### 🔥 **Examples Without `callFake()`**
+
+Let's see how to use each of these.
+
+---
+
+#### ✅ **Using `.and.returnValues()`**
+If you want the mocked function to **return different values on each call**, use `.and.returnValues()`.
+
+```typescript
+it('should return concatenated names using returnValues()', () => {
+  spyOn(service, 'getUser').and.returnValues(
+    { name: 'mohit', id: 111 },  // First call to getUser()
+    { name: 'rahul', id: 222 }   // Second call to getUser()
+  );
+
+  const result = service.calculate();
+  expect(result).toBe('mohitrahul'); // Returns values in order of calls
+});
+```
+
+---
+
+#### ✅ **Using `.and.callThrough()`**
+If you want to **use the original implementation of `getUser()`**, but still track calls and usage.
+
+```typescript
+it('should use the original implementation with callThrough()', () => {
+  spyOn(service, 'getUser').and.callThrough(); // Calls the real function
+
+  const result = service.calculate();
+  expect(result).toBe('mohitrahul'); // Assuming original implementation works
+  expect(service.getUser).toHaveBeenCalledWith(111);
+  expect(service.getUser).toHaveBeenCalledWith(222);
+});
+```
+
+---
