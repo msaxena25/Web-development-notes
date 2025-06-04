@@ -483,8 +483,177 @@ src/app/core/
   - interceptors/
       - auth.interceptor.ts
 ```
+-----
+
+## **How many Ways to Get service**
+
+In Angular, there are multiple ways to get a service instance. Below are the different methods:
 
 ---
+
+### **1. Using Constructor Injection (Recommended)**
+This is the most common and recommended way using **dependency injection (DI)**.
+
+```typescript
+ constructor(private myService: MyService) {
+    this.data = this.myService.getData();
+  }
+```
+🔹 **Best Practice:** Use this method for singleton services.
+
+---
+
+### **2. Using Injector (`inject()` - Angular 14+)**
+Instead of constructor injection, you can use the `inject()` function (Angular 14+).
+
+```typescript
+  import { inject } from '@angular/core';
+
+export class ExampleComponent {
+  myService = inject(MyService);
+  data = this.myService.getData();
+}
+```
+🔹 **Best Practice:** Useful in **standalone components or directives**.
+
+---
+
+### **3. Using Injector (`Injector` Class)**
+If you cannot use constructor injection (e.g., inside a non-Angular class), use the **Injector** class.
+
+```typescript
+import { Injector } from '@angular/core';
+
+export class ExampleClass {
+  private myService: MyService;
+
+  constructor(private injector: Injector) {
+    this.myService = this.injector.get(MyService);
+  }
+
+  getData() {
+    return this.myService.getData();
+  }
+}
+```
+
+🔹 **Use Case:** When manually creating an instance of a service.
+---
+
+### **5. Using `@Optional()` for Conditional Injection**
+This is useful if the service may or may not be provided.
+
+```typescript
+constructor(@Optional() private myService: MyService) {
+  if (this.myService) {
+    console.log('Service Available');
+  } else {
+    console.log('Service Not Available');
+  }
+}
+```
+
+🔹 **Use Case:** When a service is optional.
+
+---
+
+## **Best way to handle relative paths - Path mapping from tsconfig.json**
+
+Angular has a way to avoid long relative import paths by using **TypeScript path mapping** in your `tsconfig.json` file. This allows you to create custom aliases for your directories, making your imports cleaner and easier to maintain.
+
+### Steps to Set Up Path Mapping in Angular
+
+1. **Update `tsconfig.json`**:
+   
+   You need to modify the `compilerOptions` section of your `tsconfig.json` file to define paths.
+
+   Here's how you can set it up:
+
+   ```json
+   {
+     "compilerOptions": {
+       "baseUrl": "./",
+       "paths": {
+         "@core/*": ["src/app/core/*"],
+         "@shared/*": ["src/app/shared/*"],
+         "@services/*": ["src/app/core/services/*"],
+         "@models/*": ["src/app/models/*"]
+       }
+     }
+   }
+   ```
+
+2. **Use the Aliases in Your Imports**:
+   
+   After setting up the paths, you can use these aliases to simplify your imports.
+
+   **Before Path Mapping:**
+
+   ```typescript
+   import { SystemService } from '../../../../core/services/system-services.service';
+   ```
+
+   **After Path Mapping:**
+
+   ```typescript
+   import { SystemService } from '@services/system-services.service';
+   ```
+
+   As you can see, the import path is now much shorter and more readable.
+
+3. **Restart the Development Server**:
+   
+   After updating the `tsconfig.json` file, make sure to restart the Angular development server (`ng serve`) to reflect the changes.
+
+### Advantages:
+- **Cleaner Imports**: It eliminates the need for long relative paths.
+- **Easier Refactoring**: If you move files around, you only need to update the paths in `tsconfig.json` instead of changing imports throughout your entire codebase.
+- **Better Readability**: Your import statements become more readable and maintainable.
+---
+
+
+## **Use of Barrel Files to maintain imports**
+
+You're referring to consolidating imports for services, enums, and models, so you don't have to import them repeatedly in every component or service.
+
+You can create a central file (called Barrel file) to export all these common services, enums, and models, and then just import that file wherever you need them.
+
+Here’s how you can do it:
+
+### 1. **Create a Centralized Imports File**
+
+You can create a file (e.g., `index.ts`) in a folder, like `src/app/shared/`, and export all your commonly used services, enums, and models from there.
+
+#### `src/app/shared/index.ts` (or any name you prefer)
+
+```typescript
+// Services
+export * from './services/user.service';
+export * from './services/auth.service';
+export * from './services/payment.service';
+
+// Enums
+export * from './enums/user-roles.enum';
+export * from './enums/payment-status.enum';
+
+// Models
+export * from './models/user.model';
+export * from './models/payment.model';
+```
+
+### 2. **Import the Centralized File in Your Components**
+
+Now, in your components (or any other files), instead of importing each individual service, enum, or model, you just import from the `shared/index.ts` file.
+
+#### Example Component: `example.component.ts`
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { UserService, AuthService, PaymentService } from '../shared';  // Import everything from index.ts
+import { UserRole } from '../shared';  // Import Enums and Models from index.ts
+import { PaymentStatus } from '../shared';
+```
+-------------
 
 # **TypeScript level - good code practices**
 
@@ -721,3 +890,139 @@ At the **TypeScript level**, organizing and structuring your code efficiently al
    ```
 
 -----------
+
+## **Difference Between `type` and `interface` in TypeScript**
+
+Both `type` and `interface` are used to define custom types in TypeScript, but they have key differences.
+
+---
+
+### **1. Syntax & Basic Usage**
+#### **Using `interface`**
+```typescript
+interface User {
+  name: string;
+  age: number;
+}
+```
+
+#### **Using `type`**
+```typescript
+type User = {
+  name: string;
+  age: number;
+};
+```
+
+---
+
+### **2. Extensibility**
+#### **Interfaces Can Be Extended (Merging)**
+Interfaces support **declaration merging**, allowing multiple definitions to be merged into one.
+
+```typescript
+interface User {
+  name: string;
+}
+
+interface User {
+  age: number;
+}
+
+const user: User = { name: "John", age: 30 }; // Merges both
+```
+
+#### **Types Cannot Be Merged**
+Types do not support merging; redefining a `type` with the same name causes an error.
+
+```typescript
+type User = { name: string };
+type User = { age: number }; // ❌ Error: Duplicate identifier 'User'
+```
+
+However, `type` can extend multiple types using intersection (`&`).
+
+```typescript
+type Person = { name: string };
+type Age = { age: number };
+
+type User = Person & Age;
+
+const user: User = { name: "John", age: 30 };
+```
+
+---
+
+### **3. Extending & Implementing**
+#### **Extending an `interface`**
+Interfaces can extend other interfaces using `extends`.
+
+```typescript
+interface Person {
+  name: string;
+}
+
+interface Employee extends Person {
+  salary: number;
+}
+
+const emp: Employee = { name: "John", salary: 50000 };
+```
+
+#### **Extending a `type`**
+Types use `&` (intersection) to achieve a similar result.
+
+```typescript
+type Person = { name: string };
+type Employee = Person & { salary: number };
+
+const emp: Employee = { name: "John", salary: 50000 };
+```
+
+#### **Classes Can Implement Interfaces but Not Types**
+```typescript
+interface User {
+  name: string;
+}
+
+class Person implements User {
+  name = "John";
+}
+```
+`type` **cannot be implemented** by a class.
+
+```typescript
+type User = { name: string };
+
+class Person implements User { // ❌ Error
+  name = "John";
+}
+```
+
+---
+
+### **4. Use Cases**
+| Feature                 | `interface`               | `type`                        |
+|-------------------------|-------------------------|------------------------------|
+| Object shape definition | ✅ Yes                  | ✅ Yes                        |
+| Extending other types   | ✅ `extends` keyword    | ✅ Using `&` (intersection)  |
+| Declaration merging     | ✅ Yes                  | ❌ No                         |
+| Implementing in class   | ✅ Yes                  | ❌ No                         |
+| Can define functions    | ✅ Yes                  | ✅ Yes                        |
+| Can define unions       | ❌ No                   | ✅ Yes                        |
+| Can define primitives   | ❌ No                   | ✅ Yes (`type Age = number`) |
+
+---
+
+### **5. When to Use `interface` vs `type`**
+✅ **Use `interface` when:**
+- Defining object structures.
+- Extensibility and merging are needed.
+- Implementing in a class.
+
+✅ **Use `type` when:**
+- Defining primitive types (`string | number`).
+- Using union (`type A = B | C`).
+- Creating tuple or function types.
+
+---

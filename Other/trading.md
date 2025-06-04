@@ -206,6 +206,9 @@ Crypto trading refers to the buying and selling of digital currencies (cryptocur
 
 - **Market Characteristics**: Crypto markets are highly volatile, which means prices can change rapidly and unpredictably. Crypto trading occurs 24/7, unlike traditional markets that have set trading hours.
 
+Bollinger Band - https://www.youtube.com/watch?v=9TCLTz3GG3g&t=427s
+Fake Breakout & Breakdown (stoploss hunting)- https://www.youtube.com/watch?v=Ze4GCTZJVWE
+Reversal Chart Patterns - Double top and Double bottom, Triple top and triple bottom, Head and shoulder, Rising wedge, Falling wedge - https://www.youtube.com/watch?v=RJvlvwj_ymM
 
 ---
 
