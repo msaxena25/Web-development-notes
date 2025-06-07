@@ -316,3 +316,78 @@ Each version of the Expo SDK is **tightly coupled with a specific React Native v
 * SDK versions follow a consistent release cycle (\~ every quarter)
 
 Check [https://expo.dev](https://expo.dev) for the current version.
+
+-------
+
+# Reading SMS, Sending SMS with Expo SDK
+
+Accessing **SMS functionality** with the **Expo SDK** depends on *what exactly you want to do* — reading SMS, sending SMS, or auto-verifying codes. Here's the breakdown:
+
+---
+
+## 📤 **1. Sending SMS Messages (with user interaction)**
+
+Expo provides a module to **send SMS** using the device's native SMS app (but it requires user confirmation).
+
+### ✅ Use: `expo-sms`
+
+### 🔧 Install:
+
+```bash
+npx expo install expo-sms
+```
+
+### 💻 Example:
+
+```js
+import * as SMS from 'expo-sms';
+
+const sendSMS = async () => {
+  const isAvailable = await SMS.isAvailableAsync();
+
+  if (isAvailable) {
+    const { result } = await SMS.sendSMSAsync(
+      ['1234567890'],      // Phone numbers
+      'Hello from Expo!'   // Message
+    );
+    console.log(result);   // sent / cancelled
+  } else {
+    alert('SMS is not available on this device');
+  }
+};
+```
+
+---
+
+## ❌ **2. Reading SMS Messages (e.g., OTP Auto-Read)**
+
+> ❌ Expo **does NOT support reading SMS inbox** or auto-reading OTPs in the **Managed Workflow** because that requires sensitive Android permissions and native code (like `RECEIVE_SMS` or `READ_SMS`).
+
+### To do this:
+
+You must **eject to the Bare Workflow** and use a **custom native module** like:
+
+* [`react-native-sms-retriever`](https://github.com/ammarahm-ed/react-native-sms-retriever)
+* Native Java/Kotlin implementation on Android
+
+> iOS does **not** allow SMS reading at all — Apple restricts this entirely.
+
+---
+
+## ✅ Alternative: SMS Code Auto-Fill (Android only)
+
+You can use **Google’s SMS Retriever API** via the above libraries, which auto-fills verification codes **without reading SMS content directly**.
+
+This also requires native permissions and setup, so it is **not available in Expo Managed Workflow**.
+
+---
+
+## 🔐 Summary Table
+
+| Feature                    | Supported in Expo Managed | Requires Eject (Bare Workflow) |
+| -------------------------- | ------------------------- | ------------------------------ |
+| Send SMS (via user prompt) | ✅ Yes (`expo-sms`)        | ❌ Not needed                   |
+| Read SMS (inbox)           | ❌ No                      | ✅ Yes                          |
+| Auto-verify OTP (Android)  | ❌ No                      | ✅ Yes (with native libs)       |
+
+---
