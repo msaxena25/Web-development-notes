@@ -337,3 +337,206 @@ export default withDataFetching(dataService.fetchUsers)(UserList);
 ```
 
 ---------------
+
+
+# ✅ What are **Error Boundaries** in React?
+
+**Error Boundaries** are React components that catch **JavaScript errors in their child component tree**, log those errors, and display a fallback UI instead of crashing the whole app.
+
+---
+
+### ⚠️ Why use Error Boundaries?
+
+* Prevent entire UI from breaking if one part crashes
+* Improve user experience with fallback UIs
+* Useful in production apps for logging and recovery
+
+---
+
+### 📌 Key Rules:
+
+* Only catch errors during **rendering**, **lifecycle methods**, and **constructors** of child components.
+* **Do not catch**:
+
+  * Event handlers
+  * Asynchronous code (like `setTimeout`)
+  * Server-side rendering
+  * Errors thrown in Error Boundaries themselves
+
+---
+
+### 🧠 How to implement
+
+React provides error lifecycle methods for **class components only**:
+
+* `static getDerivedStateFromError(error)`
+* `componentDidCatch(error, info)`
+
+---
+
+### 🧩 Example: Error Boundary Component
+
+#### 📄 `ErrorBoundary.js`
+
+```jsx
+import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state to show fallback UI
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // You can log the error to an error reporting service
+    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h2>Something went wrong.</h2>;
+    }
+
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+```
+
+---
+
+### 🧪 Example: Component That Throws Error
+
+#### 📄 `BuggyComponent.js`
+
+```jsx
+import React from 'react';
+
+const BuggyComponent = () => {
+  throw new Error('Simulated crash!');
+  return <div>This will not render</div>;
+};
+
+export default BuggyComponent;
+```
+
+---
+
+### 🧵 App with Error Boundary
+
+#### 📄 `App.js`
+
+```jsx
+import React from 'react';
+import ErrorBoundary from './ErrorBoundary';
+import BuggyComponent from './BuggyComponent';
+
+function App() {
+  return (
+    <div>
+      <h1>React Error Boundary Demo</h1>
+      <ErrorBoundary>
+        <BuggyComponent />
+      </ErrorBoundary>
+    </div>
+  );
+}
+
+export default App;
+```
+
+---
+
+### 🔍 Output:
+
+* Instead of crashing the app, it shows:
+  👉 **"Something went wrong."**
+
+---
+
+### 🛠 Optional: Custom Fallback UI
+
+You can make the fallback UI smarter:
+
+```jsx
+if (this.state.hasError) {
+  return (
+    <div>
+      <h2>Oops! Something broke.</h2>
+      <button onClick={() => window.location.reload()}>Reload</button>
+    </div>
+  );
+}
+```
+
+---
+
+React **does not support Error Boundaries using functional components directly** because error boundaries require lifecycle methods like `componentDidCatch` and `getDerivedStateFromError`, which **only exist in class components**.
+
+However, you can still **use error boundaries in a functional component-based app** by **wrapping** your components with a class-based error boundary component.
+
+1. **Create the Error Boundary using a class component** (because React only supports `componentDidCatch` and `getDerivedStateFromError` in class components).
+2. **Use (wrap) that Error Boundary around any component — including functional components** — in your app.
+---
+
+### 🧩 Functional Component That Crashes
+
+```jsx
+// BuggyComponent.js
+import React from 'react';
+
+const BuggyComponent = () => {
+  throw new Error("Oops, I crashed!");
+  // return <div>This will never render</div>;
+};
+
+export default BuggyComponent;
+```
+
+---
+
+### 🧵 3. Use ErrorBoundary in Functional Component App
+
+```jsx
+// App.js
+import React from 'react';
+import ErrorBoundary from './ErrorBoundary';
+import BuggyComponent from './BuggyComponent';
+
+const App = () => {
+  return (
+    <div>
+      <h1>Functional App with Error Boundary</h1>
+
+      {/* Use ErrorBoundary to wrap buggy part */}
+      <ErrorBoundary>
+        <BuggyComponent />
+      </ErrorBoundary>
+    </div>
+  );
+};
+
+export default App;
+```
+
+---
+
+### 🚫 Why You Can’t Use Hooks for This?
+
+Hooks like `useEffect`, `useErrorHandler`, or `try/catch` can **only catch runtime logic errors**, **not render-time errors**.
+
+You **must use a class component** for actual React Error Boundaries — **React has no plan to change this** as of now (React 18+).
+
+---
+
+### ✅ If you still want a Hook-style wrapper...
+
+You can use libraries like **`react-error-boundary`** by Kent C. Dodds that allow similar behavior using functional components.
+
+---
