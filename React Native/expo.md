@@ -391,3 +391,9 @@ This also requires native permissions and setup, so it is **not available in Exp
 | Auto-verify OTP (Android)  | ❌ No                      | ✅ Yes (with native libs)       |
 
 ---
+
+
+# React Native Debugger
+
+React Native Debugger works only up to RN 0.78. At RN 0.79+ it's broken, since the remote debugging bridge was removed. Remote JS Debugging, the mechanism that tools like React Native Debugger relied on, was removed in v0.79.
+React Native DevTools is now the official, supported debugger (requires Hermes, RN ≥ 0.76).
