@@ -190,6 +190,10 @@ console.log('Start typing in the search box...');
 
 Functional Programming (FP) is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state and mutable data. It's a declarative style of programming, focusing on *what* needs to be computed rather than *how* to do it step-by-step.
 
+**The core unit of functional programming is the function** — but more specifically, the pure function is what gives functional programming its unique power and identity. Pure function is the ideal form of that unit in functional programming
+
+
+
 **Core Principles of Functional Programming:**
 
 1.  **Pure Functions:**
@@ -231,3 +235,54 @@ console.log(sumOfSquaresOfEvens); // Output: 220 (4 + 16 + 36 + 64 + 100)
 ```
 
 ---------
+
+# JavaScript *is* object-oriented—but with its own twist.
+
+Unlike class-based languages like Java or C++, JavaScript is **prototype-based**. That means instead of using classes to define blueprints for objects, it uses other objects as templates. But it still supports all the core principles of object-oriented programming (OOP):
+
+- **Encapsulation**: You can group data and behavior inside objects.
+- **Inheritance**: Achieved through prototypes or ES6 `class` syntax (which is syntactic sugar over prototypes).
+- **Polymorphism**: You can override methods and use dynamic typing to write flexible code.
+
+So yes, JavaScript is object-oriented—but it’s also **multi-paradigm**. It supports functional and procedural styles too, which makes it incredibly flexible.
+
+---------
+
+# Java is widely used as a **server-side programming language**.
+
+It powers the backend of many enterprise applications, web services, and large-scale systems. Java’s server-side capabilities are built on technologies like:
+
+- **Servlets** – Java classes that handle HTTP requests and responses
+- **JSP (JavaServer Pages)** – for embedding Java into HTML to generate dynamic content
+- **Frameworks** like **Spring**, **Java EE (Jakarta EE)**, and **Hibernate** – which simplify and scale backend development
+
+Thanks to the **Java Virtual Machine (JVM)**, Java is platform-independent, secure, and scalable—making it a go-to choice for building robust server-side applications.
+
+## Java *can* be used for frontend development—but it’s not the go-to choice for most modern web interfaces.
+
+### 🖥️ Where Java *is* used on the frontend:
+- **Desktop apps**: Java has GUI libraries like **JavaFX** and **Swing** for building desktop applications with graphical interfaces.
+- **Embedded UIs**: Some enterprise or industrial systems use Java for touchscreen interfaces or control panels.
+- **Web UIs (historically)**: Java Applets were once used in browsers, but they’re now obsolete due to security and compatibility issues.
+
+### 🌐 Where Java is *not* typically used:
+- **Modern web frontends**: For websites and web apps, the frontend is usually built with **HTML, CSS, and JavaScript**—not Java.
+- **Mobile UIs**: Even though Android apps are written in Java (or Kotlin), the UI layer uses Android’s XML-based layout system, not Java in the traditional sense.
+
+So while Java has some frontend capabilities—especially for desktop apps—**it shines brightest on the backend**. If you're building web frontends, JavaScript (and frameworks like React or Angular) is the standard toolkit.
+
+-----------
+
+# What is JAVA?
+
+Java is a **statically typed, object-oriented, high-level programming language** with a strong emphasis on portability and security.
+
+Here’s a quick breakdown of what that means:
+
+- **Statically typed**: You must declare variable types explicitly, and type checking happens at compile time.
+- **Object-oriented**: Everything in Java revolves around classes and objects—encapsulation, inheritance, and polymorphism are core principles.
+- **High-level**: It abstracts away most of the low-level memory management, making it easier to write and maintain code.
+- **Platform-independent**: Thanks to the Java Virtual Machine (JVM), Java code can run on any device that has a JVM—this is the famous “write once, run anywhere” philosophy.
+- **Compiled and interpreted**: Java source code is compiled into bytecode, which is then interpreted or just-in-time compiled by the JVM.
+
+-----
