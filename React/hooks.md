@@ -846,3 +846,36 @@ Take an example of a hotel.
     * **With `useCallback`:** The Master Chef (parent component) writes down the "5kg process" once. They *remember that exact piece of paper*. Every day, if the core requirements for the "5kg process" (its dependencies, like "flour type" or "oven temperature") haven't changed, the Master Chef just points to or hands the *exact same piece of paper* to the Cook. The Cook (child component), being diligent, now sees "Ah, it's the *same* piece of paper with the same instructions! I don't need to re-evaluate; I can just keep doing my thing."
 
 -------------
+
+# why should use 'use' before custom hook ?
+
+In React, prefixing a custom hook with **`use`** isn’t just a naming convention—it’s a **critical signal** to both React and developer tools that the function follows the **Rules of Hooks**.
+
+### 🧠 Why the `use` Prefix Matters
+
+- **React’s Linting Rules**: Tools like `eslint-plugin-react-hooks` rely on the `use` prefix to identify hook functions. Without it, you’ll get warnings or errors when using built-in hooks like `useState` or `useEffect` inside your custom function.
+
+- **Hook Behavior Enforcement**: React expects hooks to be called **unconditionally** and **only at the top level** of a function component or another hook. The `use` prefix helps developers instantly recognize that a function must follow these rules.
+  
+- **Code Readability**: Seeing `useSomething()` tells you it’s a hook and likely contains stateful logic or side effects. Without the prefix, it’s easy to misuse it—like calling it conditionally or inside loops.
+
+### 🧪 Example
+
+```js
+// ✅ Valid custom hook
+function useCounter(initialValue) {
+  const [count, setCount] = useState(initialValue);
+  return [count, () => setCount(count + 1)];
+}
+
+// ❌ Invalid custom hook (missing 'use' prefix)
+function counterHelper(initialValue) {
+  const [count, setCount] = useState(initialValue); // ESLint will complain
+  return [count, () => setCount(count + 1)];
+}
+```
+
+### 🔍 React’s Official Rule
+> “A custom Hook is a JavaScript function whose name starts with ‘use’ and that may call other Hooks.” — [React Docs](https://react.dev/learn/reusing-logic-with-custom-hooks)
+
+So, it’s not just about style—it’s about **functionality, tooling, and clarity**. Want help refactoring a hook or checking if it follows the rules? I’m all ears.
