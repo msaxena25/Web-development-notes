@@ -241,5 +241,3 @@ This works well for basic layouts and avoids external dependencies.
 | Manual padding with `StatusBar` | ✅               | ❌              | ⭐⭐          |
 
 ---
-
-Want help integrating this into a navigation layout or making it theme-aware? I can help you build a reusable wrapper!

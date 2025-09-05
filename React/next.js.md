@@ -51,14 +51,14 @@ The easiest way to get started is by using `create-next-app`, which sets up a ne
 
 npx create-next-app@latest my-ecommerce-app
 
-# Follow prompts:
-# ? Would you like to use TypeScript? (y/N) y
-# ? Would you like to use ESLint? (y/N) y
-# ? Would you like to use Tailwind CSS? (y/N) y
-# ? Would you like to use `src/` directory? (y/N) y
-# ? Would you like to use App Router? (recommended) (y/N) y  <-- IMPORTANT: Choose YES
-# ? Would you like to customize the default import alias? (y/N) y
-# ? What import alias would you like configured? @/*
+### Follow prompts:
+### ? Would you like to use TypeScript? (y/N) y
+### ? Would you like to use ESLint? (y/N) y
+### ? Would you like to use Tailwind CSS? (y/N) y
+### ? Would you like to use `src/` directory? (y/N) y
+### ? Would you like to use App Router? (recommended) (y/N) y  <-- IMPORTANT: Choose YES
+### ? Would you like to customize the default import alias? (y/N) y
+### ? What import alias would you like configured? @/*
 
 **5. Navigate into Your Project Directory:**
 

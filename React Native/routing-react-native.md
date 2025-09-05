@@ -315,3 +315,201 @@ Expo Router is a routing library built by the Expo team specifically for Expo pr
 * **When type-safe routing** is a high priority.
 
 ---
+
+# Why React native use Stack for navigation?
+
+Great question! Let’s break it down 💡
+
+### 📚 What React Navigation Is Doing Here
+
+React Navigation is a powerful routing and navigation library for React Native apps. The line:
+
+```js
+const Stack = createNativeStackNavigator();
+```
+
+sets up a **stack navigator**, which is one of the most common navigation patterns.
+
+---
+
+### 🧱 Why Use a Stack Navigator?
+
+The **stack** mimics how screens are added and removed in a mobile app—like pages on a stack of paper. It makes sense for flows where you:
+
+- Push a new screen when navigating (e.g. from Home → Details)
+- Pop the screen when going back (e.g. Details → Home)
+
+---
+
+### 🛠 What `createNativeStackNavigator()` Does
+
+- It creates a stack-based navigation system.
+- Powered under the hood by **native code** (via `react-native-screens`) for better performance on mobile devices.
+- Enables transitions, headers, and gestures that feel natural on iOS and Android.
+
+---
+
+### ✅ Pros of Using Stack Navigation
+
+- **Intuitive UX**: Users expect this navigation flow on mobile.
+- **Memory Efficiency**: Only the top screen is active, others are paused.
+- **Native Performance**: Faster and smoother than JavaScript-based stacks.
+- **Customizable**: You can control headers, animations, gestures, etc.
+
+---
+
+# What are Building blocks to create react native navigation ?
+---
+
+### 🧱 Core Building Blocks of React Native Navigation
+
+1. **Navigators**
+   - These are the **containers** that define how screens relate to each other.
+   - Popular ones:
+     - `Stack Navigator`: Push/pop behavior like a history stack.
+     - `Tab Navigator`: Bottom tabs or top tabs for switching between sections.
+     - `Drawer Navigator`: Side menu that slides in from the edge.
+   - Created using:
+     ```js
+     import { createNativeStackNavigator } from '@react-navigation/native-stack';
+     ```
+
+2. **Screens**
+   - Individual React components that you navigate between.
+   - You register them inside navigators:
+     ```js
+     <Stack.Screen name="Home" component={HomeScreen} />
+     ```
+
+3. **Navigation Container**
+   - Wraps the whole navigation structure.
+   - Think of it as the **brain** that keeps track of state and deep linking.
+     ```js
+     import { NavigationContainer } from '@react-navigation/native';
+     ```
+
+4. **Navigators from React Navigation**
+   - Provided by `@react-navigation/native`, `@react-navigation/native-stack`, etc.
+   - These let you pick between native and JavaScript-based stack implementations.
+
+5. **Navigation Props & Hooks**
+   - `useNavigation`, `useRoute`: Give you access to navigation actions and route details inside your components.
+   - Useful for programmatic navigation like:
+     ```js
+     navigation.navigate("Profile", { userId: 123 });
+     ```
+
+6. **Params & State**
+   - You can pass **parameters** between screens.
+   - Navigation state tracks where your user is and what screens are stacked.
+
+7. **Custom Headers & Transition Animations**
+   - Built-in or user-defined to make UI look slick and fit your app’s style.
+
+---
+
+
+# All common React Navigation methods with **code examples** and **2-line use cases** each:
+
+---
+
+### ✅ 1. `navigate(name, params)`
+
+```js
+navigation.navigate('Profile', { userId: 42 });
+```
+
+**Use case:** Navigate to a screen and pass data like user ID or product ID.
+
+---
+
+### ✅ 2. `push(name, params)`
+
+```js
+navigation.push('Profile', { userId: 42 });
+```
+
+**Use case:** Push another instance of the same screen onto the stack (e.g., viewing multiple users' profiles one after another).
+
+---
+
+### ✅ 3. `goBack()`
+
+```js
+navigation.goBack();
+```
+
+**Use case:** Go back to the previous screen in the stack — similar to a browser "Back" button.
+
+---
+
+### ✅ 4. `replace(name, params)`
+
+```js
+navigation.replace('Login', { redirectTo: 'Home' });
+```
+
+**Use case:** Replace the current screen (e.g., after logout or signup success) so the user can’t go back.
+
+---
+
+### ✅ 5. `reset(state)`
+
+```js
+navigation.reset({
+  index: 0,
+  routes: [{ name: 'Home' }],
+});
+```
+
+**Use case:** Wipe navigation history and start fresh (like after onboarding or logout).
+
+---
+
+### ✅ 6. `pop()`
+
+```js
+navigation.pop();
+```
+
+**Use case:** Go back one screen — same as `goBack()`, but useful if you need more control in stacks.
+
+---
+
+### ✅ 7. `popToTop()`
+
+```js
+navigation.popToTop();
+```
+
+**Use case:** Return to the first screen in the stack (e.g., after completing a multi-step form).
+
+---
+
+### ✅ 8. `setParams(params)`
+
+```js
+navigation.setParams({ title: 'Updated Title' });
+```
+
+**Use case:** Update route params dynamically (e.g., to change the screen title based on user input).
+
+---
+
+### ✅ 9. `navigate({...})` with nested screens
+
+```js
+navigation.navigate('Account', {
+  screen: 'Settings',
+  params: { mode: 'dark' },
+});
+```
+
+**Use case:** Navigate to a screen inside a nested navigator (like Tab or Drawer inside a Stack).
+
+---
+
+
+# How to create a custom drawer navigator with nested items in react native?
+
+To create a custom drawer navigator with nested items in React Native, you can use thereact-navigation library along with a custom drawer content component. In the custom drawer content,you can create sections with headers that can be expanded or collapsed to show or hide nested items.You can manage the expanded state using React's useState hook and render the nested items conditionallybased on this state. The example above demonstrates how to implement this functionality.
